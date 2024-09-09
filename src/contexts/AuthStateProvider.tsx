@@ -3,11 +3,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { validateToken } from "../utils/validateToken";
 import { OAuthMessage } from "../callback";
 import { revokeToken } from "../utils/revokeToken";
-import {
-  AuthError,
-  type AuthState,
-  AuthStateContext,
-} from "./AuthStateContext";
+import { type AuthState, AuthStateContext } from "./AuthStateContext";
 
 const OAUTH2_URL = "https://id.twitch.tv/oauth2/authorize";
 
@@ -17,7 +13,6 @@ export default function AuthStateProvider({
   children: React.ReactNode;
 }): React.ReactElement {
   const [accessToken, setAccessToken] = useLocalStorage("accessToken");
-  const [authError, setAuthError] = useState<AuthError>();
   const [authState, setAuthState] = useState<AuthState>();
 
   const login = useCallback(() => {
@@ -26,6 +21,7 @@ export default function AuthStateProvider({
     url.searchParams.set("redirect_uri", import.meta.env.VITE_REDIRECT_URI);
     url.searchParams.set("scope", ["user:read:chat"].join(" "));
     url.searchParams.set("response_type", "token");
+    url.searchParams.set("force_verify", "true");
 
     void window.open(url, undefined, "popup=yes");
   }, []);
@@ -37,7 +33,7 @@ export default function AuthStateProvider({
       if (message.type === "token") {
         setAccessToken(message.data.token);
       } else {
-        setAuthError(message.data);
+        console.error("handleMessage:", message.data);
       }
     },
     [setAccessToken]
@@ -68,18 +64,8 @@ export default function AuthStateProvider({
     let discard = false;
 
     validateToken(accessToken)
-      .then(([data, error]) => {
+      .then((data) => {
         if (discard) {
-          return;
-        }
-
-        if (error) {
-          setAuthState(undefined);
-          setAuthError({
-            type: error.status.toString(),
-            description: error.message,
-          });
-
           return;
         }
 
@@ -99,7 +85,6 @@ export default function AuthStateProvider({
         };
 
         setAuthState(token);
-        setAuthError(undefined);
       })
       .catch((error: unknown) => {
         console.error("validateToken:", error);
@@ -110,7 +95,7 @@ export default function AuthStateProvider({
     };
   }, [accessToken, setAccessToken]);
 
-  const value = { login, signOut, authState, authError };
+  const value = { login, signOut, authState };
 
   return (
     <AuthStateContext.Provider value={value}>

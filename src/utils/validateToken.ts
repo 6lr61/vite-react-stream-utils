@@ -14,14 +14,10 @@ interface InvalidTokenResponse {
   message: string;
 }
 
-type ReturnValue =
-  | readonly [ValidTokenResponse, undefined]
-  | readonly [undefined, InvalidTokenResponse];
-
 export async function validateToken(
   token: string,
   controller?: AbortController
-): Promise<ReturnValue> {
+): Promise<ValidTokenResponse> {
   const response = await fetch(VALIDATE_URL, {
     headers: {
       Authorization: `OAuth ${token}`,
@@ -32,10 +28,10 @@ export async function validateToken(
   if (!response.ok) {
     const result = (await response.json()) as InvalidTokenResponse;
 
-    return [undefined, result] as const;
+    throw new Error(result.message);
   }
 
   const result = (await response.json()) as ValidTokenResponse;
 
-  return [result, undefined] as const;
+  return result;
 }
