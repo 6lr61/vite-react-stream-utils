@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import "./App.css";
 import { AuthStateContext } from "./contexts/AuthStateContext";
+import LoginButton from "./components/LoginButton";
 
 export default function App() {
   const context = useContext(AuthStateContext);
@@ -12,13 +13,7 @@ export default function App() {
   return (
     <>
       <p>Hello: {context.authState?.user.login}</p>
-      <p>Error: {context.authError?.description}</p>
-      <button type="button" onClick={context.login}>
-        Hello
-      </button>
-      <button type="button" onClick={context.signOut}>
-        Goodbye
-      </button>
+      <LoginButton />
     </>
   );
 }
