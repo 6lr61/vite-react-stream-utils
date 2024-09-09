@@ -55,7 +55,7 @@ export default function AuthStateProvider({
 
   const signOut = useCallback(() => {
     if (accessToken) {
-      setAccessToken(null);
+      setAccessToken(undefined);
       setAuthState(undefined);
       void revokeToken(accessToken);
     }

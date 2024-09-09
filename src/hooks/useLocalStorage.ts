@@ -1,30 +1,24 @@
-import { useCallback, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 
-type CallbackFunction = () => void;
+export function useLocalStorage(key: string) {
+  const [value, setValue] = useState<string | undefined>(() => {
+    return window.localStorage.getItem(key) ?? undefined;
+  });
 
-function getSnapshot(key: string): string | null {
-  return window.localStorage.getItem(key);
-}
+  useEffect(() => {
+    if (value !== undefined) {
+      window.localStorage.setItem(key, value);
+    } else {
+      window.localStorage.removeItem(key);
+    }
 
-function setValue(key: string, value: string): void {
-  const event = new StorageEvent("storage");
-  window.localStorage.setItem(key, value);
-  window.dispatchEvent(event);
-}
+    window.dispatchEvent(new StorageEvent("storage", { key }));
+  }, [key, value]);
 
-function removeValue(key: string): void {
-  const event = new StorageEvent("storage");
-  window.localStorage.removeItem(key);
-  window.dispatchEvent(event);
-}
-
-export function useLocalStorage(
-  key: string
-): [string | null, (value: string | null) => void] {
-  function subscribe(callback: CallbackFunction): CallbackFunction {
+  useEffect(() => {
     const handleEvent = (event: StorageEvent) => {
       if (event.key === key) {
-        callback();
+        setValue(window.localStorage.getItem(key) ?? undefined);
       }
     };
 
@@ -33,22 +27,7 @@ export function useLocalStorage(
     return () => {
       window.removeEventListener("storage", handleEvent);
     };
-  }
+  }, [key]);
 
-  const updateValue = useCallback(
-    (value: string | null) => {
-      if (value) {
-        setValue(key, value);
-      } else {
-        removeValue(key);
-      }
-    },
-    [key]
-  );
-
-  const value = useSyncExternalStore<string | null>(subscribe, () =>
-    getSnapshot(key)
-  );
-
-  return [value, updateValue];
+  return [value, setValue] as const;
 }
