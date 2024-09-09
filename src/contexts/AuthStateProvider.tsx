@@ -46,7 +46,7 @@ export default function AuthStateProvider({
         setError(message.data);
       }
     },
-    [setAccessToken, setError]
+    [setAccessToken]
   );
 
   const login = useCallback(() => {
