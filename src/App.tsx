@@ -12,6 +12,7 @@ export default function App() {
   return (
     <>
       <p>Hello: {context.authState?.user.login}</p>
+      <p>Error: {context.authError?.description}</p>
       <button type="button" onClick={context.login}>
         Hello
       </button>

@@ -1,7 +1,9 @@
 import { createContext } from "react";
 
 export interface AuthState {
-  clientId: string;
+  client: {
+    id: string;
+  };
   user: {
     id: string;
     login: string;
