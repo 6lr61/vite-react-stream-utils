@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 export function useLocalStorage(key: string) {
-  const [value, setValue] = useState<string | undefined>(() => {
-    return window.localStorage.getItem(key) ?? undefined;
-  });
+  const [value, setValue] = useState<string | undefined>(
+    () => window.localStorage.getItem(key) ?? undefined
+  );
 
   useEffect(() => {
     if (value !== undefined) {
