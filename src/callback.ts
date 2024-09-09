@@ -74,10 +74,11 @@ if (!window.opener) {
 }
 
 if (window.location.hash) {
-  // FIXME: Type this?
-  window.opener.postMessage(parseFragments(window.location.hash));
+  const opener = window.opener as Window | null;
+  opener?.postMessage(parseFragments(window.location.hash));
 }
 
 if (window.location.search) {
-  window.opener.postMessage(parseParameters(window.location.search));
+  const opener = window.opener as Window | null;
+  opener?.postMessage(parseParameters(window.location.search));
 }
