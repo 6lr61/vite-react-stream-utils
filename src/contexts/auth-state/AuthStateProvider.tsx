@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { validateToken } from "../utils/validateToken";
-import { OAuthMessage } from "../callback";
-import { revokeToken } from "../utils/revokeToken";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { validateToken } from "../../utils/validateToken";
+import { OAuthMessage } from "../../callback";
+import { revokeToken } from "../../utils/revokeToken";
 import { type AuthState, AuthStateContext } from "./AuthStateContext";
 
 const OAUTH2_URL = "https://id.twitch.tv/oauth2/authorize";

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "./App.css";
-import { AuthStateContext } from "./contexts/AuthStateContext";
+import { AuthStateContext } from "./contexts/auth-state/AuthStateContext";
 import LoginButton from "./components/LoginButton";
 
 export default function App() {

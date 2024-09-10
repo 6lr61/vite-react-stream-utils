@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthStateContext } from "../contexts/AuthStateContext";
+import { AuthStateContext } from "../contexts/auth-state/AuthStateContext";
 
 export default function LoginButton(): React.ReactElement {
   const context = useContext(AuthStateContext);

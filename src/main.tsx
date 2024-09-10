@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import AuthStateProvider from "./contexts/AuthStateProvider.tsx";
+import AuthStateProvider from "./contexts/auth-state/AuthStateProvider.tsx";
 
 const rootElement = document.querySelector("#root");
 
