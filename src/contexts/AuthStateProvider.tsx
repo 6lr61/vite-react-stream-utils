@@ -23,7 +23,11 @@ export default function AuthStateProvider({
     url.searchParams.set("response_type", "token");
     url.searchParams.set("force_verify", "true");
 
-    void window.open(url, undefined, "popup=yes");
+    void window.open(
+      url,
+      undefined,
+      "popup=yes,innerWidth=480,innerHeight=784"
+    );
   }, []);
 
   const handleMessage = useCallback(
