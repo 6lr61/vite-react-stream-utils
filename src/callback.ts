@@ -82,3 +82,7 @@ if (window.location.search) {
   const opener = window.opener as Window | null;
   opener?.postMessage(parseParameters(window.location.search));
 }
+
+setTimeout(() => {
+  window.close();
+}, 100);
