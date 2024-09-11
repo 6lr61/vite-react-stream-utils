@@ -2,14 +2,13 @@ import { useContext } from "react";
 import { AuthStateContext } from "./contexts/auth-state/AuthStateContext";
 import LoginButton from "./components/LoginButton";
 import "./App.css";
-import { useEventSub } from "./hooks/useEventSub";
+import { useTwitchChat } from "./hooks/useTwitchChat";
+import TwitchBadgeProvider from "./contexts/badges/TwitchBadgeProvider";
+import Message from "./components/Message";
 
 export default function App() {
   const authContext = useContext(AuthStateContext);
-  const { lastMessage } = useEventSub("channel.chat.message", {
-    broadcaster_user_id: authContext?.authState?.user.id,
-    user_id: authContext?.authState?.user.id,
-  });
+  const messages = useTwitchChat();
 
   if (!authContext) {
     return <p>Missing AuthStateContext provider?</p>;
@@ -17,9 +16,22 @@ export default function App() {
 
   return (
     <>
-      <p>Hello: {authContext.authState?.user.login}</p>
-      <p>Last message: {JSON.stringify(lastMessage)}</p>
       <LoginButton />
+      {authContext.authState && (
+        <section>
+          <p>Hello: {authContext.authState.user.login}</p>
+          <article>
+            <h2>Chat Messages:</h2>
+            <TwitchBadgeProvider>
+              <div>
+                {messages.map((message) => (
+                  <Message key={message.message_id} message={message} />
+                ))}
+              </div>
+            </TwitchBadgeProvider>
+          </article>
+        </section>
+      )}
     </>
   );
 }

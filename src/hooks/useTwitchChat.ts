@@ -8,12 +8,19 @@ import type { ChatMessageDeleteEvent } from "../utils/event-sub/events/chat/mess
 
 type ChatEvent =
   | ChatMessage
-  | ({ type: "channel.chat.clear" } & ChatEventCommon)
-  | ({ type: "channel.chat.clear_user_messages" } & ChatClearUserMessageEvent)
-  | ({ type: "channel.chat.message_delete" } & ChatMessageDeleteEvent);
+  | ({ type: "channel.chat.clear"; timestamp: Date } & ChatEventCommon)
+  | ({
+      type: "channel.chat.clear_user_messages";
+      timestamp: Date;
+    } & ChatClearUserMessageEvent)
+  | ({
+      type: "channel.chat.message_delete";
+      timestamp: Date;
+    } & ChatMessageDeleteEvent);
 
-type ChatMessage = {
+export type ChatMessage = {
   type: "channel.chat.message";
+  timestamp: Date;
 } & ChatMessageEvent;
 
 const subscriptions = [

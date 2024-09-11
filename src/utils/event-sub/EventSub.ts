@@ -119,6 +119,7 @@ export class EventSub {
 
     const event = {
       type: messageType,
+      timestamp: new Date(message.metadata.message_timestamp),
       ...message.payload.event,
     };
 
