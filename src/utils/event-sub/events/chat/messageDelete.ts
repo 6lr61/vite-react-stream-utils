@@ -18,7 +18,7 @@ export interface ChatMessageDeletePayload {
   event: ChatMessageDeleteEvent;
 }
 
-interface ChatMessageDeleteEvent extends ChatEventCommon {
+export interface ChatMessageDeleteEvent extends ChatEventCommon {
   target_user_id: string;
   target_user_name: string;
   target_user_login: string;

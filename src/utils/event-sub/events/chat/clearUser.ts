@@ -18,7 +18,7 @@ export interface ChatClearUserMessagePayload {
   event: ChatClearUserMessageEvent;
 }
 
-interface ChatClearUserMessageEvent extends ChatEventCommon {
+export interface ChatClearUserMessageEvent extends ChatEventCommon {
   target_user_id: string;
   target_user_name: string;
   target_user_login: string;

@@ -18,7 +18,7 @@ export interface ChatMessagePayload {
   event: ChatMessageEvent;
 }
 
-interface ChatMessageEvent extends ChatEventCommon {
+export interface ChatMessageEvent extends ChatEventCommon {
   chatter_user_id: string;
   chatter_user_name: string;
   chatter_user_login: string;
