@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import AuthStateProvider from "./contexts/auth-state/AuthStateProvider.tsx";
+import EventSubProvider from "./contexts/event-sub/EventSubProvider.tsx";
 
 const rootElement = document.querySelector("#root");
 
@@ -13,7 +14,9 @@ if (!(rootElement instanceof HTMLDivElement)) {
 createRoot(rootElement).render(
   <StrictMode>
     <AuthStateProvider>
-      <App />
+      <EventSubProvider>
+        <App />
+      </EventSubProvider>
     </AuthStateProvider>
   </StrictMode>
 );
