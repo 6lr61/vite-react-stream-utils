@@ -16,8 +16,9 @@ export default function UserProfileProvider({
   const authState = authStateContext?.authState;
   const [userData, setUserData] = useState<UserData | null>(null);
 
-  // TODO: Add a clean-up function!
   useEffect(() => {
+    let keep = true;
+
     if (authState) {
       getUser(
         authState.token.value,
@@ -25,14 +26,18 @@ export default function UserProfileProvider({
         login ?? authState.user.login
       )
         .then((data) => {
-          setUserData(data);
+          if (keep) {
+            setUserData(data);
+          }
         })
         .catch((error: unknown) => {
           console.error("UserProfile:", error);
         });
-    } else {
-      setUserData(null);
     }
+
+    return () => {
+      keep = false;
+    };
   }, [authState, login]);
 
   return (
