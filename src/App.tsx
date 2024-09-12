@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { AuthStateContext } from "./contexts/auth-state/AuthStateContext";
 import LoginButton from "./components/LoginButton";
 import { useTwitchChat } from "./hooks/useTwitchChat";
-import TwitchBadgeProvider from "./contexts/badges/TwitchBadgeProvider";
 import Message from "./components/Message";
 import MessageContainer from "./components/MessageContainer";
 
@@ -24,13 +23,11 @@ export default function App() {
           </p>
           <article>
             <h2>Chat Messages:</h2>
-            <TwitchBadgeProvider>
-              <MessageContainer messages={messages}>
-                {messages.map((message) => (
-                  <Message key={message.message_id} message={message} />
-                ))}
-              </MessageContainer>
-            </TwitchBadgeProvider>
+            <MessageContainer messages={messages}>
+              {messages.map((message) => (
+                <Message key={message.message_id} message={message} />
+              ))}
+            </MessageContainer>
           </article>
         </section>
       )}

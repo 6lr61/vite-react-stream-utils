@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { ChatMessage } from "../hooks/useTwitchChat";
+import TwitchBadgeProvider from "../contexts/badges/TwitchBadgeProvider";
 
 export default function MessageContainer({
   children,
@@ -20,7 +21,9 @@ export default function MessageContainer({
 
   return (
     <section ref={ref} className="h-[600px] justify-end overflow-y-auto">
-      <article className="flex flex-col gap-1">{children}</article>
+      <TwitchBadgeProvider>
+        <article className="flex flex-col gap-1">{children}</article>
+      </TwitchBadgeProvider>
     </section>
   );
 }
