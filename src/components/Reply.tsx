@@ -12,12 +12,12 @@ export default function Reply({
   message: MessageReply;
 }): React.ReactElement {
   return (
-    <article className="reply">
-      <header>
-        ↳ Replying to: @{message.parent_user_login} (
-        {hasLocalizedName(message) && message.parent_user_login})
+    <article className="bg-black/25 text-sm px-2 py-1">
+      <header className="font-bold">
+        ↳ Replying to: @{message.parent_user_login}
+        {hasLocalizedName(message) && `(${message.parent_user_login})`}
       </header>
-      <section className="body">{message.parent_message_body}</section>
+      <section className="italic">{message.parent_message_body}</section>
     </article>
   );
 }

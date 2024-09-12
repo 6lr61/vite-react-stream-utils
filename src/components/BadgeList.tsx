@@ -25,7 +25,7 @@ export default function BadgeList({
   }
 
   return (
-    <div className="badges">
+    <div className="flex flex-row gap-1">
       {badges.map(({ set_id, id }) => (
         <img
           key={makeKey(set_id, id)}

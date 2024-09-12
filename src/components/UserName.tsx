@@ -10,10 +10,10 @@ export default function UserName({
   message: ChatMessage;
 }): React.ReactElement {
   return (
-    <p>
-      <span className="display-name">{message.chatter_user_name}</span>
+    <p className="flex-1 overflow-hidden text-ellipsis">
+      <span className="font-bold">{message.chatter_user_name}</span>
       {hasLocalizedName(message) && (
-        <span className="username">({message.chatter_user_login})</span>
+        <span className="font-normal">({message.chatter_user_login})</span>
       )}
     </p>
   );

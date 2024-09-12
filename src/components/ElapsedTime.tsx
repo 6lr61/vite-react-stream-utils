@@ -26,7 +26,7 @@ export default function ElapsedTime({
 
   return (
     <>
-      <span className="timer">
+      <span className="flex-shrink-0 text-sm">
         {minutes > 0 ? `⧗ ${minutes.toString()}m` : "just now!"}
       </span>
     </>

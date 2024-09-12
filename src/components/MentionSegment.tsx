@@ -15,8 +15,8 @@ export default function MentionSegment({
     <span
       className={
         mentioned === authStateContext?.authState?.user.login
-          ? "streamer-mention"
-          : "chatter-mention"
+          ? "font-bold p-1 rounded-sm bg-slate-600"
+          : "p-1 rounded-sm bg-slate-700"
       }
     >
       {text}

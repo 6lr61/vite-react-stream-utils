@@ -17,5 +17,11 @@ export default function TwitchEmote({
   const url = `https://static-cdn.jtvnw.net/emoticons/v2/${fragment.emote.id}/${emoteFormat}/${theme}/${scale}`;
 
   // TODO: Add fixed sizes?
-  return <img src={url} alt={fragment.text} />;
+  return (
+    <img
+      className="relative inline-block -my-2"
+      src={url}
+      alt={fragment.text}
+    />
+  );
 }

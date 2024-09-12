@@ -8,7 +8,6 @@ import Reply from "./Reply";
 import TextSegment from "./TextSegment";
 import TwitchEmote from "./TwitchEmote";
 import UserName from "./UserName";
-import "./Message.css";
 import UserProfileProvider from "../contexts/UserProfileProvider";
 
 interface Props {
@@ -49,16 +48,19 @@ function fragmentToComponent(
 export default function Message({ message }: Props): React.ReactElement {
   return (
     <UserProfileProvider login={message.chatter_user_login}>
-      <article className="message">
+      <article className="flex flex-row gap-1">
         <ProfilePicture />
-        <section className="container">
-          <header style={{ backgroundColor: colorToRgba(message.color) }}>
+        <section className="flex-1 overflow-hidden rounded-md">
+          <header
+            className="flex px-2 gap-2 items-center bg-black/25"
+            style={{ backgroundColor: colorToRgba(message.color) }}
+          >
             <BadgeList badges={message.badges} />
             <UserName message={message} />
             <ElapsedTime startingDate={message.timestamp} />
           </header>
           {message.reply && <Reply message={message.reply} />}
-          <section className="body">
+          <section className="h-full bg-slate-800 break-words px-2 py-1">
             {message.message.fragments.map((fragment, index) =>
               fragmentToComponent(fragment, index)
             )}
