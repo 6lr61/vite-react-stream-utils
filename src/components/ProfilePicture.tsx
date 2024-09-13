@@ -9,8 +9,8 @@ export default function ProfilePicture({
 
   return (
     <article className="size-14 rounded-xl overflow-hidden">
-      {userData?.profile_image_url ? (
-        <img className="object-fill" src={userData.profile_image_url} />
+      {userData.data?.profile_image_url ? (
+        <img className="object-fill" src={userData.data.profile_image_url} />
       ) : (
         <div className="bg-slate-600 size-full"></div>
       )}
