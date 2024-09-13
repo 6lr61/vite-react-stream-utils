@@ -8,5 +8,5 @@ export default function Pronoun({
 }): ReactElement | undefined {
   const pronoun = usePronouns(login);
 
-  return <p className="flex-1 font-normal text-sm">{pronoun}</p>;
+  return <p className="flex-1 font-normal text-sm">{pronoun.data}</p>;
 }
