@@ -4,6 +4,7 @@ import BadgeList from "./BadgeList";
 import ElapsedTime from "./ElapsedTime";
 import MentionSegment from "./MentionSegment";
 import ProfilePicture from "./ProfilePicture";
+import Pronoun from "./Pronoun";
 import Reply from "./Reply";
 import TextSegment from "./TextSegment";
 import TwitchEmote from "./TwitchEmote";
@@ -54,7 +55,8 @@ export default function Message({ message }: Props): React.ReactElement {
           style={{ backgroundColor: colorToRgba(message.color) }}
         >
           <BadgeList badges={message.badges} />
-          <UserName message={message} />
+            <UserName message={message} />
+            <Pronoun login={message.chatter_user_login} />
           <ElapsedTime startingDate={message.timestamp} />
         </header>
         {message.reply && <Reply message={message.reply} />}
