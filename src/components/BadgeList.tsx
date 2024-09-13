@@ -20,7 +20,7 @@ export default function BadgeList({
 }: Props): React.ReactElement | undefined {
   const twitchBadges = useContext(TwitchBadgeConext);
 
-  if (!twitchBadges || badges.length === 0) {
+  if (badges.length === 0) {
     return;
   }
 

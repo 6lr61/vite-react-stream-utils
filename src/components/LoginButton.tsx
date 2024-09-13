@@ -1,22 +1,18 @@
 import { useContext } from "react";
-import { AuthStateContext } from "../contexts/auth-state/AuthStateContext";
+import { AuthContext } from "../contexts/auth-state/AuthContext";
 
 export default function LoginButton(): React.ReactElement {
-  const context = useContext(AuthStateContext);
+  const { authState, login, signOut } = useContext(AuthContext);
 
-  if (!context) {
-    throw new Error("LoginButton: Missing AuthStateContext");
-  }
-
-  if (context.authState) {
+  if (authState) {
     return (
-      <button type="button" onClick={context.signOut}>
+      <button type="button" onClick={signOut}>
         Sign out
       </button>
     );
   } else {
     return (
-      <button type="button" onClick={context.login}>
+      <button type="button" onClick={login}>
         Login
       </button>
     );

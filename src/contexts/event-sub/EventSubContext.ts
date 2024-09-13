@@ -5,4 +5,10 @@ interface Value {
   subscribe: typeof EventSub.instance.subscribe;
 }
 
-export const EventSubContext = createContext<Value | null>(null);
+export const EventSubContext = createContext<Value>(
+  new Proxy({} as Value, {
+    get() {
+      throw new Error("EventSubContext must be provided");
+    },
+  })
+);

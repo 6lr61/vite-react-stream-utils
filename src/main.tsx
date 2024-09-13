@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import AuthStateProvider from "./contexts/auth-state/AuthStateProvider.tsx";
+import AuthProvider from "./contexts/auth-state/AuthProvider.tsx";
 import EventSubProvider from "./contexts/event-sub/EventSubProvider.tsx";
 
 const rootElement = document.querySelector("#root");
@@ -13,10 +13,10 @@ if (!(rootElement instanceof HTMLDivElement)) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <AuthStateProvider>
+    <AuthProvider>
       <EventSubProvider>
         <App />
       </EventSubProvider>
-    </AuthStateProvider>
+    </AuthProvider>
   </StrictMode>
 );

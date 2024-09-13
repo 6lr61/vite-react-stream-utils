@@ -1,4 +1,4 @@
-import type { AuthState } from "../../contexts/auth-state/AuthStateContext";
+import type { AuthState } from "../../contexts/auth-state/AuthContext";
 import { subscribe } from "../api/event-sub/subscribe";
 import type {
   EventSubMessage,

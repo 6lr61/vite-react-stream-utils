@@ -1,11 +1,10 @@
 import { useContext } from "react";
-import { AuthStateContext } from "../contexts/auth-state/AuthStateContext";
+import { AuthContext } from "../contexts/auth-state/AuthContext";
 import { getUser } from "../utils/api/getUser";
 import { useQuery } from "@tanstack/react-query";
 
 export function useGetProfile(login: string) {
-  const authStateContext = useContext(AuthStateContext);
-  const authState = authStateContext?.authState;
+  const { authState } = useContext(AuthContext);
 
   return useQuery({
     enabled: !!authState,

@@ -1,6 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { TwitchBadgeConext, type TwitchBadges } from "./TwitchBadgeContext";
-import { AuthStateContext } from "../auth-state/AuthStateContext";
+import {
+  TwitchBadgeConext,
+  type BadgeKey,
+  type BadgeValue,
+  type TwitchBadges,
+} from "./TwitchBadgeContext";
+import { AuthContext } from "../auth-state/AuthContext";
 import { getBadges } from "../../utils/api/getBadges";
 
 interface Props {
@@ -10,21 +15,19 @@ interface Props {
 export default function TwitchBadgeProvider({
   children,
 }: Props): React.ReactElement {
-  const [badges, setBadges] = useState<TwitchBadges | null>(null);
-  const authStateContext = useContext(AuthStateContext);
+  const [badges, setBadges] = useState<TwitchBadges>(
+    () => new Map<BadgeKey, BadgeValue>()
+  );
+  const { authState } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!authStateContext?.authState) {
+    let keep = true;
+
+    if (!authState) {
       return;
     }
 
-    let keep = true;
-
-    getBadges(
-      authStateContext.authState.token.value,
-      authStateContext.authState.client.id,
-      authStateContext.authState.user.id
-    )
+    getBadges(authState.token.value, authState.client.id, authState.user.id)
       .then((sets) => {
         const tmp = sets.flatMap(({ set_id, versions }) =>
           versions.map(({ id, ...rest }) => [`${set_id}/${id}`, rest] as const)
@@ -41,7 +44,7 @@ export default function TwitchBadgeProvider({
     return () => {
       keep = false;
     };
-  }, [authStateContext]);
+  }, [authState]);
 
   return (
     <TwitchBadgeConext.Provider value={badges}>

@@ -1,4 +1,4 @@
-import type { AuthState } from "../../../contexts/auth-state/AuthStateContext";
+import type { AuthState } from "../../../contexts/auth-state/AuthContext";
 
 interface SubscriptionsResponse {
   data: [

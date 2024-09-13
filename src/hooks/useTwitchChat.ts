@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { AuthStateContext } from "../contexts/auth-state/AuthStateContext";
+import { AuthContext } from "../contexts/auth-state/AuthContext";
 import type { ChatMessageEvent } from "../utils/event-sub/events/chat/message";
 import { EventSubContext } from "../contexts/event-sub/EventSubContext";
 import type { ChatEventCommon } from "../utils/event-sub/events/chat/_common";
@@ -31,17 +31,9 @@ const subscriptions = [
 ];
 
 export function useTwitchChat(bufferSize = 50, channelId?: string) {
-  const authStateContext = useContext(AuthStateContext);
+  const { authState } = useContext(AuthContext);
   const eventSubContext = useContext(EventSubContext);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-
-  if (!authStateContext) {
-    throw new Error("useTwitchChat: Needs an AuthStateContext Provider!");
-  }
-
-  if (!eventSubContext) {
-    throw new Error("useTwitchChat: Needs a EventSubContext Provider!");
-  }
 
   const { subscribe } = eventSubContext;
 
@@ -82,8 +74,6 @@ export function useTwitchChat(bufferSize = 50, channelId?: string) {
   );
 
   useEffect(() => {
-    const { authState } = authStateContext;
-
     if (!authState) {
       return;
     }
@@ -94,7 +84,7 @@ export function useTwitchChat(bufferSize = 50, channelId?: string) {
     };
 
     return subscribe(authState, subscriptions, condition, handleMessage);
-  }, [authStateContext, channelId, handleMessage, subscribe]);
+  }, [authState, channelId, handleMessage, subscribe]);
 
   return messages;
 }

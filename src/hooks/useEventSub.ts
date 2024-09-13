@@ -1,24 +1,16 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { EventSubContext } from "../contexts/event-sub/EventSubContext";
-import { AuthStateContext } from "../contexts/auth-state/AuthStateContext";
+import { AuthContext } from "../contexts/auth-state/AuthContext";
 
 export function useEventSub(
   type: string | string[],
   condition: Record<string, unknown>,
   bufferSize = 50
 ) {
-  const authStateContext = useContext(AuthStateContext);
+  const { authState } = useContext(AuthContext);
   const eventSubContext = useContext(EventSubContext);
   const [messages, setMessages] = useState<Record<string, unknown>[]>([]);
   const [lastMessage, setLastMessage] = useState<Record<string, unknown>>();
-
-  if (!authStateContext) {
-    throw new Error("useEventSub: Needs an AuthStateContext Provider!");
-  }
-
-  if (!eventSubContext) {
-    throw new Error("useEventSub: Needs a EventSubContext Provider!");
-  }
 
   const { subscribe } = eventSubContext;
 
@@ -31,8 +23,6 @@ export function useEventSub(
   );
 
   useEffect(() => {
-    const { authState } = authStateContext;
-
     if (!authState) {
       return;
     }
@@ -46,7 +36,7 @@ export function useEventSub(
     }
 
     return subscribe(authState, type, condition, handleMessage);
-  }, [authStateContext, condition, handleMessage, subscribe, type]);
+  }, [authState, condition, handleMessage, subscribe, type]);
 
   return { lastMessage, messages };
 }

@@ -27,4 +27,10 @@ interface Value {
   signOut: () => void;
 }
 
-export const AuthStateContext = createContext<Value | null>(null);
+export const AuthContext = createContext<Value>(
+  new Proxy({} as Value, {
+    get() {
+      throw new Error("AuthContext must be provided");
+    },
+  })
+);

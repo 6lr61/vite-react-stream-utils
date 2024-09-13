@@ -3,11 +3,11 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { validateToken } from "../../utils/validateToken";
 import type { OAuthMessage } from "../../callback";
 import { revokeToken } from "../../utils/revokeToken";
-import { type AuthState, AuthStateContext } from "./AuthStateContext";
+import { type AuthState, AuthContext } from "./AuthContext";
 
 const OAUTH2_URL = "https://id.twitch.tv/oauth2/authorize";
 
-export default function AuthStateProvider({
+export default function AuthProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -101,9 +101,5 @@ export default function AuthStateProvider({
 
   const value = { login, signOut, authState };
 
-  return (
-    <AuthStateContext.Provider value={value}>
-      {children}
-    </AuthStateContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
