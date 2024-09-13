@@ -1,13 +1,18 @@
-import { useContext } from "react";
-import { UserProfileContext } from "../contexts/UserProfileContext";
+import { useGetProfile } from "../hooks/useGetProfile";
 
-export default function ProfilePicture(): React.ReactElement {
-  const userData = useContext(UserProfileContext);
+export default function ProfilePicture({
+  login,
+}: {
+  login: string;
+}): React.ReactElement {
+  const userData = useGetProfile(login);
 
   return (
-    <article className="size-14 rounded-xl overflow-hidden bg-slate-700">
-      {userData?.profile_image_url && (
+    <article className="size-14 rounded-xl overflow-hidden">
+      {userData?.profile_image_url ? (
         <img className="object-fill" src={userData.profile_image_url} />
+      ) : (
+        <div className="bg-slate-600 size-full"></div>
       )}
     </article>
   );
