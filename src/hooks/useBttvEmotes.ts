@@ -26,6 +26,7 @@ interface BetterTTVEmoteFragment {
   text: string;
   animated: boolean;
   global: boolean;
+  modifier: boolean;
   owner?: {
     login: string;
     name: string;
@@ -55,6 +56,7 @@ function makeBttvFragments(
           text: emote.code,
           animated: emote.animated,
           global: global ?? false,
+          modifier: emote.modifier ?? false,
           owner: emote.user && {
             login: emote.user.name,
             name: emote.user.displayName,
