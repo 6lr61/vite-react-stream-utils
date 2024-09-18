@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react";
 import { AuthContext } from "./contexts/auth-state/AuthContext";
 import LoginButton from "./components/LoginButton";
-import Chat from "./components/Chat";
+import Messages from "./components/Messages";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function App() {
@@ -23,7 +23,7 @@ export default function App() {
             <p className="bg-pink-50">Hello: {authState.user.login}</p>
             <article>
               <h2>Chat Messages:</h2>
-              <Chat />
+              <Messages />
             </article>
           </section>
         )}

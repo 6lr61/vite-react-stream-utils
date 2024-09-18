@@ -1,4 +1,4 @@
-import { useBadges } from "../hooks/useBadges";
+import type { useBadges } from "../hooks/useBadges";
 
 interface Props {
   // FIXME: Derive this from a single point of truth
@@ -8,6 +8,7 @@ interface Props {
     /** Months subscribed */
     info: string;
   }[];
+  twitchBadges: ReturnType<typeof useBadges>;
 }
 
 function makeKey(setId: string, id: string): `${string}/${string}` {
@@ -16,9 +17,8 @@ function makeKey(setId: string, id: string): `${string}/${string}` {
 
 export default function BadgeList({
   badges,
+  twitchBadges,
 }: Props): React.ReactElement | undefined {
-  const twitchBadges = useBadges();
-
   if (badges.length === 0) {
     return;
   }

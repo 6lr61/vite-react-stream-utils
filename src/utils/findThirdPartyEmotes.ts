@@ -1,22 +1,17 @@
-import { useContext } from "react";
-import { AuthContext } from "../contexts/auth-state/AuthContext";
-import { useBttvEmotes, type BetterTTVEmoteFragment } from "./useBttvEmotes";
-import {
-  useSevenTvEmotes,
-  type SevenTVEmoteFragment,
-} from "./useSevenTvEmotes";
-import type { ChatFragment } from "../utils/event-sub/events/chat/message";
+import { type BetterTTVEmoteFragment } from "../hooks/useBttvEmotes";
+import { type SevenTVEmoteFragment } from "../hooks/useSevenTvEmotes";
+import type { ChatFragment } from "./event-sub/events/chat/message";
 
 export type Fragment =
   | ChatFragment
   | BetterTTVEmoteFragment
   | SevenTVEmoteFragment;
+type Emotes = Record<string, BetterTTVEmoteFragment | SevenTVEmoteFragment>;
 
-export function useThirdPartyEmotes(fragments: ChatFragment[]): Fragment[] {
-  const { authState } = useContext(AuthContext);
-  const bttvEmotes = useBttvEmotes(authState?.user.id);
-  const sevenTvEmotes = useSevenTvEmotes(authState?.user.id);
-  const emotes = { ...bttvEmotes, ...sevenTvEmotes };
+export function findThirdPartyEmotes(
+  fragments: ChatFragment[],
+  emotes: Emotes
+): Fragment[] {
   const names = Object.keys(emotes);
 
   return fragments.flatMap((fragment) => {
@@ -28,9 +23,9 @@ export function useThirdPartyEmotes(fragments: ChatFragment[]): Fragment[] {
       ({ 0: match }) => names.includes(match)
     );
 
-    /// Some text Kappa Kappa and such
     const subFragments: Fragment[] = [];
     let start = 0;
+
     for (const { 0: name, index } of found) {
       if (start < index) {
         subFragments.push({
