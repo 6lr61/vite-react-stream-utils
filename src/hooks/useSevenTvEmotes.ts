@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { skipToken, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 enum EmoteSetFlag {
@@ -239,19 +239,20 @@ export function useSevenTvEmotes(userId?: string) {
   });
 
   const { data: channel } = useQuery({
-    enabled: !!userId,
+    enabled: Boolean(userId),
     queryKey: ["sevenTvChannelEmotes", userId],
-    queryFn: () =>
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      fetch(`https://7tv.io/v3/users/twitch/${userId}`)
-        .then((response) => response.json())
-        .then(
-          ({
-            emote_set: { emotes },
-          }: {
-            emote_set: { emotes: SevenTvEmoteModel[] };
-          }) => emotes
-        ),
+    queryFn: userId
+      ? () =>
+          fetch(`https://7tv.io/v3/users/twitch/${userId}`)
+            .then((response) => response.json())
+            .then(
+              ({
+                emote_set: { emotes },
+              }: {
+                emote_set: { emotes: SevenTvEmoteModel[] };
+              }) => emotes
+            )
+      : skipToken,
     select: makeChannelFragments,
   });
 

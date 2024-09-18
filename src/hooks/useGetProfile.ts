@@ -1,15 +1,16 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth-state/AuthContext";
 import { getUser } from "../utils/api/getUser";
-import { useQuery } from "@tanstack/react-query";
+import { skipToken, useQuery } from "@tanstack/react-query";
 
 export function useGetProfile(login: string) {
   const { authState } = useContext(AuthContext);
 
   return useQuery({
-    enabled: !!authState,
+    enabled: Boolean(authState),
     queryKey: ["userProfilePicture", login],
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    queryFn: () => getUser(authState!.token.value, authState!.client.id, login),
+    queryFn: authState
+      ? () => getUser(authState.token.value, authState.client.id, login)
+      : skipToken,
   });
 }

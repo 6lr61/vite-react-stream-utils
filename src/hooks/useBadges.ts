@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { skipToken, useQuery } from "@tanstack/react-query";
 import { getBadges, type Badge, type BadgeSet } from "../utils/api/getBadges";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth-state/AuthContext";
@@ -19,10 +19,11 @@ export function useBadges(userId?: string) {
   const { authState } = useContext(AuthContext);
 
   const { data } = useQuery({
-    enabled: !!authState,
+    enabled: Boolean(authState),
     queryKey: ["twitchBadges", userId],
-    // @ts-expect-error authState is not undefinend when query is exectued
-    queryFn: () => getBadges(authState, userId ?? authState?.user.id),
+    queryFn: authState
+      ? () => getBadges(authState, userId ?? authState.user.id)
+      : skipToken,
     select: makeBadgeMap,
   });
 

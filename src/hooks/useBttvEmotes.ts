@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { skipToken, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 interface BetterTTVEmote {
@@ -96,21 +96,22 @@ export function useBttvEmotes(userId?: string) {
   });
 
   const { data: channel } = useQuery({
-    enabled: !!userId,
+    enabled: Boolean(userId),
     queryKey: ["bttvChannelEmotes", userId],
-    queryFn: () =>
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      fetch(`https://api.betterttv.net/3/cached/users/twitch/${userId}`)
-        .then((response) => response.json())
-        .then(
-          ({
-            channelEmotes,
-            sharedEmotes,
-          }: {
-            channelEmotes: BetterTTVEmote[];
-            sharedEmotes: BetterTTVEmote[];
-          }) => [...channelEmotes, ...sharedEmotes]
-        ),
+    queryFn: userId
+      ? () =>
+          fetch(`https://api.betterttv.net/3/cached/users/twitch/${userId}`)
+            .then((response) => response.json())
+            .then(
+              ({
+                channelEmotes,
+                sharedEmotes,
+              }: {
+                channelEmotes: BetterTTVEmote[];
+                sharedEmotes: BetterTTVEmote[];
+              }) => [...channelEmotes, ...sharedEmotes]
+            )
+      : skipToken,
     select: makeChannelFragments,
   });
 
