@@ -14,7 +14,7 @@ export default function Emotes(): ReactElement {
       <ul className="flex flex-row flex-wrap gap-1">
         {Object.entries(bttvEmotes).map(([name, emote]) => (
           <li key={name}>
-            <img alt={name} src={emote.small.file} {...emote.small} />
+            <img alt={name} {...emote.small} />
           </li>
         ))}
       </ul>
@@ -22,7 +22,7 @@ export default function Emotes(): ReactElement {
       <ul className="flex flex-row flex-wrap gap-1">
         {Object.entries(sevenTvEmotes).map(([name, emote]) => (
           <li key={name}>
-            <img alt={name} src={emote.small.file} {...emote.small} />
+            <img alt={name} {...emote.small} />
           </li>
         ))}
       </ul>

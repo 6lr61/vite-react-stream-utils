@@ -21,7 +21,7 @@ interface BetterTTVEmote {
   height?: number;
 }
 
-interface BetterTTVEmoteFragment {
+export interface BetterTTVEmoteFragment {
   type: "bttv-emote";
   text: string;
   animated: boolean;
@@ -32,12 +32,12 @@ interface BetterTTVEmoteFragment {
     name: string;
   };
   small: {
-    file: string;
+    src: string;
     height: number;
     width: number;
   };
   big: {
-    file: string;
+    src: string;
     height: number;
     width: number;
   };
@@ -62,12 +62,12 @@ function makeBttvFragments(
             name: emote.user.displayName,
           },
           small: {
-            file: `https://cdn.betterttv.net/emote/${emote.id}/1x.webp`,
+            src: `https://cdn.betterttv.net/emote/${emote.id}/1x.webp`,
             height: emote.height ?? 28,
             width: emote.width ?? 28,
           },
           big: {
-            file: `https://cdn.betterttv.net/emote/${emote.id}/3x.webp`,
+            src: `https://cdn.betterttv.net/emote/${emote.id}/3x.webp`,
             height: 3 * (emote.height ?? 28),
             width: 3 * (emote.width ?? 28),
           },

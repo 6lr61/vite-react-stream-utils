@@ -144,7 +144,7 @@ interface Connection {
   emote_set: EmoteSet | null;
 }
 
-interface SevenTVEmoteFragment {
+export interface SevenTVEmoteFragment {
   type: "7tv-emote";
   text: string;
   animated: boolean;
@@ -154,14 +154,14 @@ interface SevenTVEmoteFragment {
     name: string;
   };
   small: {
-    file: string;
-    height?: number;
-    width?: number;
+    src: string;
+    height: number;
+    width: number;
   };
   big: {
-    file: string;
-    height?: number;
-    width?: number;
+    src: string;
+    height: number;
+    width: number;
   };
 }
 
@@ -182,10 +182,10 @@ function filterEmote(emote: SevenTvEmoteModel): boolean {
 function sizeOf(
   filename: string,
   files: SevenTvEmoteModel["data"]["host"]["files"]
-): { height?: number; width?: number } {
+): { height: number; width: number } {
   const file = files.find(({ name }) => name === filename);
 
-  return { height: file?.height, width: file?.width };
+  return { height: file?.height ?? 32, width: file?.width ?? 32 };
 }
 
 function makeSevenTvFragments(

@@ -1,5 +1,8 @@
+import {
+  useThirdPartyEmotes,
+  type Fragment,
+} from "../hooks/useThirdPartyEmotes";
 import type { ChatMessage } from "../hooks/useTwitchChat";
-import type { ChatFragment } from "../utils/event-sub/events/chat/message";
 import BadgeList from "./BadgeList";
 import ElapsedTime from "./ElapsedTime";
 import MentionSegment from "./MentionSegment";
@@ -28,7 +31,7 @@ function colorToRgba(color?: string): string | undefined {
 }
 
 function fragmentToComponent(
-  fragment: ChatFragment,
+  fragment: Fragment,
   index: number
 ): React.ReactElement | undefined {
   const key = `fragment-${index.toString()}`;
@@ -40,12 +43,23 @@ function fragmentToComponent(
       return <TwitchEmote key={key} fragment={fragment} />;
     case "mention":
       return <MentionSegment key={key} text={fragment.text} />;
+    case "7tv-emote":
+    case "bttv-emote":
+      return (
+        <img
+          key={key}
+          className="relative inline-block -my-2"
+          {...fragment.small}
+        />
+      );
     default:
       return;
   }
 }
 
 export default function Message({ message }: Props): React.ReactElement {
+  const fragments = useThirdPartyEmotes(message.message.fragments);
+
   return (
     <article className="flex flex-row gap-1">
       <ProfilePicture login={message.chatter_user_login} />
@@ -61,7 +75,7 @@ export default function Message({ message }: Props): React.ReactElement {
         </header>
         {message.reply && <Reply message={message.reply} />}
         <section className="h-full bg-slate-800 break-words px-2 py-1">
-          {message.message.fragments.map((fragment, index) =>
+          {fragments.map((fragment, index) =>
             fragmentToComponent(fragment, index)
           )}
         </section>
