@@ -55,8 +55,8 @@ export default function Message({ message }: Props): React.ReactElement {
           style={{ backgroundColor: colorToRgba(message.color) }}
         >
           <BadgeList badges={message.badges} />
-            <UserName message={message} />
-            <Pronoun login={message.chatter_user_login} />
+          <UserName message={message} />
+          <Pronoun login={message.chatter_user_login} />
           <ElapsedTime startingDate={message.timestamp} />
         </header>
         {message.reply && <Reply message={message.reply} />}

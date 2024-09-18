@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { TwitchBadgeConext } from "../contexts/badges/TwitchBadgeContext";
+import { useBadges } from "../hooks/useBadges";
 
 interface Props {
   // FIXME: Derive this from a single point of truth
@@ -18,7 +17,7 @@ function makeKey(setId: string, id: string): `${string}/${string}` {
 export default function BadgeList({
   badges,
 }: Props): React.ReactElement | undefined {
-  const twitchBadges = useContext(TwitchBadgeConext);
+  const twitchBadges = useBadges();
 
   if (badges.length === 0) {
     return;
@@ -29,7 +28,7 @@ export default function BadgeList({
       {badges.map(({ set_id, id }) => (
         <img
           key={makeKey(set_id, id)}
-          src={twitchBadges.get(makeKey(set_id, id))?.image_url_1x}
+          src={twitchBadges?.get(makeKey(set_id, id))?.image_url_1x}
         />
       ))}
     </div>

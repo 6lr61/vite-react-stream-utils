@@ -1,3 +1,5 @@
+import type { AuthState } from "../../contexts/auth-state/AuthContext";
+
 const CHANNEL_BADGES_URL = "https://api.twitch.tv/helix/chat/badges";
 const GLOBAL_BADGES_URL = "https://api.twitch.tv/helix/chat/badges/global";
 
@@ -45,16 +47,19 @@ async function getBadgeSet(
 }
 
 export async function getBadges(
-  accessToken: string,
-  clientId: string,
+  authState: AuthState,
   userId: string
 ): Promise<BadgeSet[]> {
   const url = new URL(CHANNEL_BADGES_URL);
   url.searchParams.set("broadcaster_id", userId);
 
   const [channelBadges, globalBadges] = await Promise.all([
-    await getBadgeSet(accessToken, clientId, url),
-    await getBadgeSet(accessToken, clientId, GLOBAL_BADGES_URL),
+    await getBadgeSet(authState.token.value, authState.client.id, url),
+    await getBadgeSet(
+      authState.token.value,
+      authState.client.id,
+      GLOBAL_BADGES_URL
+    ),
   ]);
 
   return [...globalBadges.data, ...channelBadges.data];

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import TwitchBadgeProvider from "../contexts/badges/TwitchBadgeProvider";
 import { useTwitchChat } from "../hooks/useTwitchChat";
 import Message from "./Message";
 
@@ -17,13 +16,11 @@ export default function Chat(): React.ReactElement {
 
   return (
     <section ref={ref} className="h-[600px] justify-end overflow-y-auto">
-      <TwitchBadgeProvider>
-        <article className="flex flex-col gap-1">
-          {messages.map((message) => (
-            <Message key={message.message_id} message={message} />
-          ))}
-        </article>
-      </TwitchBadgeProvider>
+      <article className="flex flex-col gap-1">
+        {messages.map((message) => (
+          <Message key={message.message_id} message={message} />
+        ))}
+      </article>
     </section>
   );
 }
