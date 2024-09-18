@@ -32,6 +32,10 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@typescript-eslint/consistent-type-imports": ["error"],
+      "@typescript-eslint/prefer-literal-enum-member": [
+        "error",
+        { allowBitwiseExpressions: true },
+      ],
     },
   }
 );
