@@ -52,12 +52,10 @@ export async function getBadges(
   const url = new URL(CHANNEL_BADGES_URL);
   url.searchParams.set("broadcaster_id", userId);
 
-  const channelBadges = await getBadgeSet(accessToken, clientId, url);
-  const globalBadges = await getBadgeSet(
-    accessToken,
-    clientId,
-    GLOBAL_BADGES_URL
-  );
+  const [channelBadges, globalBadges] = await Promise.all([
+    await getBadgeSet(accessToken, clientId, url),
+    await getBadgeSet(accessToken, clientId, GLOBAL_BADGES_URL),
+  ]);
 
   return [...globalBadges.data, ...channelBadges.data];
 }
