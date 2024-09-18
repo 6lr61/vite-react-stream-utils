@@ -76,11 +76,7 @@ export default function Message({ message }: Props): React.ReactElement {
         {message.reply && <Reply message={message.reply} />}
         <section className="h-full bg-slate-800 break-words px-2 py-1">
           {fragments
-            .filter((fragment) =>
-              message.reply && fragment.type === "mention"
-                ? fragment.mention.user_id !== message.reply.parent_user_id
-                : true
-            )
+            .slice(message.reply ? 1 : 0) // Drop the first mention fragment
             .map((fragment, index) => fragmentToComponent(fragment, index))}
         </section>
       </section>
