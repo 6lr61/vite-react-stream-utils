@@ -206,12 +206,12 @@ function makeSevenTvFragments(
             name: emote.data.owner.display_name,
           },
           small: {
-            file: `https:${emote.data.host.url}/1x.webp`,
-            ...sizeOf("1px.webp", emote.data.host.files),
+            src: `https:${emote.data.host.url}/1x.webp`,
+            ...sizeOf("1x.webp", emote.data.host.files),
           },
           big: {
-            file: `https:${emote.data.host.url}/4x.webp`,
-            ...sizeOf("4px.webp", emote.data.host.files),
+            src: `https:${emote.data.host.url}/4x.webp`,
+            ...sizeOf("4x.webp", emote.data.host.files),
           },
         },
       ] as const
