@@ -19,7 +19,7 @@ export default function TwitchEmote({
   // TODO: Add fixed sizes?
   return (
     <img
-      className="relative inline-block -my-2"
+      className="emote relative inline-block -my-2"
       src={url}
       alt={fragment.text}
     />

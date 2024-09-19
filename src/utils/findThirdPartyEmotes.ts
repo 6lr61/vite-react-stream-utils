@@ -1,5 +1,6 @@
 import { type BetterTTVEmoteFragment } from "../hooks/useBttvEmotes";
 import { type SevenTVEmoteFragment } from "../hooks/useSevenTvEmotes";
+import type { Processed } from "../hooks/useTwitchChat";
 import type { ChatFragment } from "./event-sub/events/chat/message";
 
 export type Fragment =
@@ -9,7 +10,7 @@ export type Fragment =
 type Emotes = Record<string, BetterTTVEmoteFragment | SevenTVEmoteFragment>;
 
 export function findThirdPartyEmotes(
-  fragments: ChatFragment[],
+  fragments: Processed[],
   emotes: Emotes
 ): Fragment[] {
   const names = Object.keys(emotes);

@@ -36,8 +36,6 @@ export default function AuthProvider({
 
       if (message.type === "token") {
         setAccessToken(message.data.token);
-      } else {
-        console.error("handleMessage:", message.data);
       }
     },
     [setAccessToken]

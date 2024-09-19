@@ -1,5 +1,6 @@
 import type { ChatEventCommon } from "./_common";
 import type { EventSubTransport } from "../transport";
+import type { Processed } from "../../../../hooks/useTwitchChat";
 
 export interface ChatMessagePayload {
   subscription: {
@@ -27,7 +28,7 @@ export interface ChatMessageEvent extends ChatEventCommon {
   message: {
     /** Chat message in plain text */
     text: string;
-    fragments: ChatFragment[];
+    fragments: Processed[];
   };
   message_type:
     | "text"

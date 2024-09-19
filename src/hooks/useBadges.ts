@@ -5,7 +5,7 @@ import { AuthContext } from "../contexts/auth-state/AuthContext";
 
 type BadgeKey = `${BadgeSet["set_id"]}/${Badge["id"]}`;
 type BadgeValue = Omit<Badge, "id">;
-type TwitchBadges = Map<BadgeKey, BadgeValue>;
+export type TwitchBadges = Map<BadgeKey, BadgeValue>;
 
 function makeBadgeMap(data: BadgeSet[]): TwitchBadges {
   return new Map(
