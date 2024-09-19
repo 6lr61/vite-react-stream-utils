@@ -149,6 +149,7 @@ export interface SevenTVEmoteFragment {
   text: string;
   animated: boolean;
   global: boolean;
+  zeroWidth: boolean;
   owner: {
     login: string;
     name: string;
@@ -201,6 +202,7 @@ function makeSevenTvFragments(
           text: emote.name,
           animated: emote.data.animated,
           global: global ?? false,
+          zeroWidth: Boolean(emote.flags & ActiveEmoteFlag.ZeroWidth),
           owner: {
             login: emote.data.owner.username,
             name: emote.data.owner.display_name,
