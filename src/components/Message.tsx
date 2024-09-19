@@ -1,4 +1,4 @@
-import { memo, type ReactElement } from "react";
+import type { ReactElement } from "react";
 import type { ChatMessage, Processed } from "../hooks/useTwitchChat";
 import ProfilePicture from "./ProfilePicture";
 import BadgeList from "./BadgeList";
@@ -24,26 +24,27 @@ function colorToRgba(color?: string): string | undefined {
   return `rgba(${red}, ${green}, ${blue}, 0.25)`;
 }
 
-function fragmentToComponent(
-  fragment: Processed,
-  index: number
-): React.ReactElement | undefined {
+function FragmentToComponent({
+  fragment,
+}: {
+  fragment: Processed;
+}): React.ReactElement | undefined {
   switch (fragment.type) {
     case "text":
-      return <TextSegment key={index} text={fragment.text} />;
+      return <TextSegment text={fragment.text} />;
     case "emote":
-      return <TwitchEmote key={index} fragment={fragment} />;
+      return <TwitchEmote fragment={fragment} />;
     case "mention":
-      return <MentionSegment key={index} text={fragment.text} />;
+      return <MentionSegment text={fragment.text} />;
     case "7tv-emote":
     case "bttv-emote":
-      return <Emote key={index} fragment={fragment} />;
+      return <Emote fragment={fragment} />;
     default:
       return;
   }
 }
 
-function MessageComponent({
+export default function MessageComponent({
   message,
   twitchBadges,
 }: {
@@ -70,12 +71,11 @@ function MessageComponent({
         <section className="h-full bg-slate-800 break-words px-2 py-1">
           {message.message.fragments
             .slice(message.reply ? 1 : 0) // Drop the first mention fragment
-            .map((fragment, index) => fragmentToComponent(fragment, index))}
+            .map((fragment, index) => (
+              <FragmentToComponent key={index} fragment={fragment} />
+            ))}
         </section>
       </section>
     </article>
   );
 }
-
-const Message = memo(MessageComponent);
-export default Message;
