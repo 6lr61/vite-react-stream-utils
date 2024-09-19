@@ -1,8 +1,15 @@
 import { useContext, useMemo } from "react";
 import { AuthContext } from "./contexts/auth-state/AuthContext";
 import LoginButton from "./components/LoginButton";
-import Messages from "./components/Messages";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+function openChat() {
+  window.open(
+    "http://localhost:5173/chat/index.html",
+    undefined,
+    "popup=yes,innerWidth=480,innerHeight=784"
+  );
+}
 
 export default function App() {
   const { authState } = useContext(AuthContext);
@@ -21,10 +28,7 @@ export default function App() {
         {authState && (
           <section>
             <p className="bg-pink-50">Hello: {authState.user.login}</p>
-            <article>
-              <h2>Chat Messages:</h2>
-              <Messages />
-            </article>
+            <button onClick={openChat}>Open Chat</button>
           </section>
         )}
       </QueryClientProvider>

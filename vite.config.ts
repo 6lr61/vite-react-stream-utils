@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         callback: resolve(__dirname, "callback/index.html"),
+        chat: resolve(__dirname, "chat/index.html"),
       },
     },
   },
