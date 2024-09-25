@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function openChat() {
   window.open(
-    "http://localhost:5173/chat/index.html",
+    "/chat/index.html",
     undefined,
     "popup=yes,innerWidth=480,innerHeight=784"
   );
